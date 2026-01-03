@@ -7,7 +7,8 @@ const router = Router();
 router.get("/", controllers.getAllMessagesWithoutAuthorDetails);
 router.get("/sign-up", controllers.addNewUserGet);
 router.post("/sign-up", controllers.addNewUserPost);
-router.get("/log-in", controllers.logInGet);
-router.post("/log-in", controllers.logInPost);
+// router.get("/log-in", controllers.logInGet);
+router.post("/log-in", controllers.logIn);
+router.get("/log-out", controllers.logOut);
 
 module.exports = router;
