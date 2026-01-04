@@ -1,21 +1,26 @@
+require("dotenv").config();
+
 const { validationResult, matchedData } = require("express-validator");
 const passport = require("passport");
 
 const db = require("../db/queries");
 const e = require("express");
 
-async function getAllMessagesWithoutAuthorDetails(req, res) {
+async function getMessagesWithoutAuthorDetails(req, res) {
   const messages = await db.getAllMessages();
   res.render("index", { messages, user: req.user });
 }
 
-async function getAllMessagesWithAuthorDetails(req, res) {}
+async function getMessagesWithAuthorDetails(req, res) {
+  const messages = await db.getAllMessages();
+  res.render("members-only", { messages, user: req.user });
+}
 
-function addNewUserGet(req, res) {
+function signUpGet(req, res) {
   res.render("sign-up-form");
 }
 
-async function addNewUserPost(req, res, next) {
+async function signUpPost(req, res, next) {
   const { firstName, lastName, username, password, confirmPassword } = req.body;
   try {
     if (password === confirmPassword) {
@@ -29,10 +34,6 @@ async function addNewUserPost(req, res, next) {
     return next(error);
   }
 }
-
-// function logInGet(req, res) {
-//   res.render("log-in-form");
-// }
 
 function logIn(req, res, next) {
   passport.authenticate("local", {
@@ -48,12 +49,21 @@ function logOut(req, res, next) {
   });
 }
 
+function logInMember(req, res) {
+  const { passcode } = req.body;
+  if (passcode === process.env.secret) {
+    res.redirect("/members");
+  } else {
+    res.redirect("/");
+  }
+}
+
 module.exports = {
-  getAllMessagesWithoutAuthorDetails,
-  getAllMessagesWithAuthorDetails,
-  addNewUserGet,
-  addNewUserPost,
-  // logInGet,
+  getMessagesWithoutAuthorDetails,
+  getMessagesWithAuthorDetails,
+  signUpGet,
+  signUpPost,
   logIn,
   logOut,
+  logInMember,
 };
