@@ -11,7 +11,7 @@
     <main>
       <% if (user) {%>
       <h2>WELCOME BACK <%= user.first_name %></h2>
-      <form action="/members" method="post" class="members">
+      <form action="/member/<%= user.user_id %>" method="post" class="member">
         <h3>Enter the secret passcode to see message author details</h3>
         <label for="passcode">Passcode</label
         ><input type="password" id="passcode" name="passcode" />

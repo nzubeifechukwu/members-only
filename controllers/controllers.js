@@ -52,10 +52,15 @@ function logOut(req, res, next) {
 function logInMember(req, res) {
   const { passcode } = req.body;
   if (passcode === process.env.secret) {
-    res.redirect("/members");
+    res.redirect(`/member/${req.user.user_id}`);
   } else {
     res.redirect("/");
   }
+}
+
+function createPostGet(req, res) {
+  const { id } = req.params;
+  res.render("create-post", { user: req.user, id: id });
 }
 
 module.exports = {
@@ -66,4 +71,5 @@ module.exports = {
   logIn,
   logOut,
   logInMember,
+  createPostGet,
 };

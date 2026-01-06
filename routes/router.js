@@ -9,7 +9,8 @@ router.get("/sign-up", controllers.signUpGet);
 router.post("/sign-up", controllers.signUpPost);
 router.post("/log-in", controllers.logIn);
 router.get("/log-out", controllers.logOut);
-router.post("/members", controllers.logInMember);
-router.get("/members", controllers.getMessagesWithAuthorDetails);
+router.post("/member/:id", controllers.logInMember);
+router.get("/member/:id", controllers.getMessagesWithAuthorDetails);
+router.get("/member/:id/create", controllers.createPostGet);
 
 module.exports = router;
