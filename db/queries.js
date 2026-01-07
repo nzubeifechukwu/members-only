@@ -26,4 +26,10 @@ async function createPost(id, title, body) {
   );
 }
 
-module.exports = { getAllMessages, createUser, createPost };
+async function updateMembership(id) {
+  await pool.query(`UPDATE users SET is_member = TRUE where user_id = $1`, [
+    id,
+  ]);
+}
+
+module.exports = { getAllMessages, createUser, createPost, updateMembership };

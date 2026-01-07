@@ -5,14 +5,9 @@ const passport = require("passport");
 
 const db = require("../db/queries");
 
-async function getMessagesWithoutAuthorDetails(req, res) {
+async function getMessages(req, res) {
   const messages = await db.getAllMessages();
   res.render("index", { messages, user: req.user });
-}
-
-async function getMessagesWithAuthorDetails(req, res) {
-  const messages = await db.getAllMessages();
-  res.render("members-only", { messages, user: req.user });
 }
 
 function signUpGet(req, res) {
@@ -43,18 +38,20 @@ function logIn(req, res, next) {
 
 function logOut(req, res, next) {
   req.logout((error) => {
-    if (error) return next(error);
+    if (error) {
+      return next(error);
+    }
     res.redirect("/");
   });
 }
 
-function logInMember(req, res) {
+async function logInMember(req, res) {
   const { passcode } = req.body;
+  const { id } = req.params;
   if (passcode === process.env.secret) {
-    res.redirect(`/member/${req.user.user_id}`);
-  } else {
-    res.redirect("/");
+    await db.updateMembership(id);
   }
+  res.redirect("/");
 }
 
 function createPostGet(req, res) {
@@ -66,12 +63,11 @@ async function createPostPost(req, res) {
   const { id } = req.params;
   const { title, body } = req.body;
   await db.createPost(id, title, body);
-  res.redirect(`/member/${id}`);
+  res.redirect("/");
 }
 
 module.exports = {
-  getMessagesWithoutAuthorDetails,
-  getMessagesWithAuthorDetails,
+  getMessages,
   signUpGet,
   signUpPost,
   logIn,
