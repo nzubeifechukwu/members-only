@@ -12,5 +12,6 @@ router.get("/log-out", controllers.logOut);
 router.post("/member/:id", controllers.logInMember);
 router.get("/member/:id", controllers.getMessagesWithAuthorDetails);
 router.get("/member/:id/create", controllers.createPostGet);
+router.post("/member/:id/create", controllers.createPostPost);
 
 module.exports = router;

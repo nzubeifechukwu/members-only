@@ -19,4 +19,11 @@ async function createUser(firstName, LastName, email, password) {
   );
 }
 
-module.exports = { getAllMessages, createUser };
+async function createPost(id, title, body) {
+  await pool.query(
+    `INSERT INTO messages (title, body, user_id) VALUES ($1, $2, $3)`,
+    [title, body, id]
+  );
+}
+
+module.exports = { getAllMessages, createUser, createPost };

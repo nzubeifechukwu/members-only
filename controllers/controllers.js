@@ -4,7 +4,6 @@ const { validationResult, matchedData } = require("express-validator");
 const passport = require("passport");
 
 const db = require("../db/queries");
-const e = require("express");
 
 async function getMessagesWithoutAuthorDetails(req, res) {
   const messages = await db.getAllMessages();
@@ -63,6 +62,13 @@ function createPostGet(req, res) {
   res.render("create-post", { user: req.user, id: id });
 }
 
+async function createPostPost(req, res) {
+  const { id } = req.params;
+  const { title, body } = req.body;
+  await db.createPost(id, title, body);
+  res.redirect(`/member/${id}`);
+}
+
 module.exports = {
   getMessagesWithoutAuthorDetails,
   getMessagesWithAuthorDetails,
@@ -72,4 +78,5 @@ module.exports = {
   logOut,
   logInMember,
   createPostGet,
+  createPostPost,
 };
