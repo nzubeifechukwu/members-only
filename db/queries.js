@@ -4,18 +4,19 @@ const pool = require("./pool");
 
 async function getAllMessages() {
   const { rows } = await pool.query(`
-        SELECT first_name, last_name, title, body, timestamp
+        SELECT first_name, last_name, title, body, timestamp, message_id
         FROM messages
         JOIN users ON messages.user_id = users.user_id
         `);
   return rows;
 }
 
-async function createUser(firstName, LastName, email, password) {
+async function createUser(firstName, LastName, email, password, isAdmin) {
   const hashedPassword = await bcrypt.hash(password, 10);
+  isAdmin == "yes" ? true : false;
   await pool.query(
-    `INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4)`,
-    [firstName, LastName, email, hashedPassword]
+    `INSERT INTO users (first_name, last_name, email, password, is_admin) VALUES ($1, $2, $3, $4, $5)`,
+    [firstName, LastName, email, hashedPassword, isAdmin]
   );
 }
 
@@ -32,4 +33,29 @@ async function updateMembership(id) {
   ]);
 }
 
-module.exports = { getAllMessages, createUser, createPost, updateMembership };
+async function deleteMessage(id) {
+  try {
+    await pool.query(`DELETE FROM messages WHERE message_id = $1`, [id]);
+  } catch (error) {
+    console.error("Error deleting message:", error);
+    throw error;
+  }
+}
+
+async function deleteAllMessages() {
+  try {
+    await pool.query("DELETE FROM messages");
+  } catch (error) {
+    console.error("Error deleting all messages:", error);
+    throw error;
+  }
+}
+
+module.exports = {
+  getAllMessages,
+  createUser,
+  createPost,
+  updateMembership,
+  deleteMessage,
+  deleteAllMessages,
+};

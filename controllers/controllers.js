@@ -15,14 +15,15 @@ function signUpGet(req, res) {
 }
 
 async function signUpPost(req, res, next) {
-  const { firstName, lastName, username, password, confirmPassword } = req.body;
+  const { firstName, lastName, username, password, confirmPassword, isAdmin } =
+    req.body;
   try {
     if (password === confirmPassword) {
-      await db.createUser(firstName, lastName, username, password);
+      await db.createUser(firstName, lastName, username, password, isAdmin);
+      res.redirect("/");
     } else {
       console.log("Passwords don't match.");
     }
-    res.redirect("/");
   } catch (error) {
     console.error(error);
     return next(error);
@@ -66,6 +67,17 @@ async function createPostPost(req, res) {
   res.redirect("/");
 }
 
+async function deleteMessage(req, res) {
+  const { id } = req.params;
+  await db.deleteMessage(id);
+  res.redirect("/");
+}
+
+async function deleteAllMessages(req, res) {
+  await db.deleteAllMessages();
+  res.redirect("/");
+}
+
 module.exports = {
   getMessages,
   signUpGet,
@@ -75,4 +87,6 @@ module.exports = {
   logInMember,
   createPostGet,
   createPostPost,
+  deleteMessage,
+  deleteAllMessages,
 };

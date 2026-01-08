@@ -22,6 +22,24 @@
         <input type="password" name="password" id="password" />
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" name="confirmPassword" id="confirmPassword" />
+        <fieldset>
+          <legend>Are you an admin?</legend>
+          <div>
+            <input type="radio" value="yes" name="isAdmin" id="yes" /><label
+              for="yes"
+              >Yes</label
+            >
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="isAdmin"
+              id="no"
+              value="no"
+              checked
+            /><label for="no">No</label>
+          </div>
+        </fieldset>
         <button type="submit">Sign Up</button>
       </form>
       <small>Have an account? <a href="/">Log in</a></small>
