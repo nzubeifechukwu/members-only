@@ -4,6 +4,7 @@ const { validationResult, matchedData } = require("express-validator");
 const passport = require("passport");
 
 const db = require("../db/queries");
+const validateUserDetails = require("../inputValidator/inputValidatorCreateUser");
 
 async function getMessages(req, res) {
   const messages = await db.getAllMessages();
@@ -14,21 +15,48 @@ function signUpGet(req, res) {
   res.render("sign-up-form");
 }
 
-async function signUpPost(req, res, next) {
-  const { firstName, lastName, username, password, confirmPassword, isAdmin } =
-    req.body;
-  try {
-    if (password === confirmPassword) {
+const signUpPost = [
+  validateUserDetails,
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .render("sign-up-form", { errors: errors.array(), formData: req.body });
+    }
+    const {
+      firstName,
+      lastName,
+      username,
+      password,
+      confirmPassword,
+      isAdmin,
+    } = matchedData(req);
+    try {
       await db.createUser(firstName, lastName, username, password, isAdmin);
       res.redirect("/");
-    } else {
-      console.log("Passwords don't match.");
+    } catch (error) {
+      console.error(error);
+      return next(error);
     }
-  } catch (error) {
-    console.error(error);
-    return next(error);
-  }
-}
+  },
+];
+
+// async function signUpPost(req, res, next) {
+//   const { firstName, lastName, username, password, confirmPassword, isAdmin } =
+//     req.body;
+//   try {
+//     if (password === confirmPassword) {
+//       await db.createUser(firstName, lastName, username, password, isAdmin);
+//       res.redirect("/");
+//     } else {
+//       console.log("Passwords don't match.");
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     return next(error);
+//   }
+// }
 
 function logIn(req, res, next) {
   passport.authenticate("local", {
