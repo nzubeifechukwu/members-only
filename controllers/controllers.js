@@ -5,6 +5,7 @@ const passport = require("passport");
 
 const db = require("../db/queries");
 const validateUserDetails = require("../inputValidator/inputValidatorCreateUser");
+const validatePostDetails = require("../inputValidator/inputValidatorCreatePost");
 
 async function getMessages(req, res) {
   const messages = await db.getAllMessages();
@@ -42,22 +43,6 @@ const signUpPost = [
   },
 ];
 
-// async function signUpPost(req, res, next) {
-//   const { firstName, lastName, username, password, confirmPassword, isAdmin } =
-//     req.body;
-//   try {
-//     if (password === confirmPassword) {
-//       await db.createUser(firstName, lastName, username, password, isAdmin);
-//       res.redirect("/");
-//     } else {
-//       console.log("Passwords don't match.");
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     return next(error);
-//   }
-// }
-
 function logIn(req, res, next) {
   passport.authenticate("local", {
     successRedirect: "/",
@@ -88,12 +73,21 @@ function createPostGet(req, res) {
   res.render("create-post", { user: req.user, id: id });
 }
 
-async function createPostPost(req, res) {
-  const { id } = req.params;
-  const { title, body } = req.body;
-  await db.createPost(id, title, body);
-  res.redirect("/");
-}
+const createPostPost = [
+  validatePostDetails,
+  async (req, res) => {
+    const { id } = req.params;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .render("create-post", { errors: errors.array(), formData: req.body, id });
+    }
+    const { title, body } = matchedData(req);
+    await db.createPost(id, title, body);
+    res.redirect("/");
+  },
+];
 
 async function deleteMessage(req, res) {
   const { id } = req.params;
