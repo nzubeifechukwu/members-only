@@ -70,6 +70,7 @@
     <% } %> <% } else { %>
     <h1>please log in</h1>
     <form action="/log-in" method="POST">
+      <%- include('partials/userAuthenticationError') %>
       <label for="username">Email</label>
       <input
         id="username"

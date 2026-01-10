@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("node:path");
 const session = require("express-session");
 const passport = require("passport");
+const flash = require("connect-flash");
 
 const router = require("./routes/router");
 const {
@@ -27,8 +28,13 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use(flash());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  res.locals.errorMessage = req.flash("error");
+  next();
+});
 app.use("/", router);
 
 passport.use(localStrategy);

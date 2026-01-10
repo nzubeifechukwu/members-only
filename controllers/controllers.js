@@ -47,6 +47,7 @@ function logIn(req, res, next) {
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/",
+    failureFlash: true,
   })(req, res, next);
 }
 
@@ -79,9 +80,11 @@ const createPostPost = [
     const { id } = req.params;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res
-        .status(400)
-        .render("create-post", { errors: errors.array(), formData: req.body, id });
+      return res.status(400).render("create-post", {
+        errors: errors.array(),
+        formData: req.body,
+        id,
+      });
     }
     const { title, body } = matchedData(req);
     await db.createPost(id, title, body);
