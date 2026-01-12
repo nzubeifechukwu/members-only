@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS messages (
   user_id INTEGER REFERENCES users(user_id)
 );
 
-ALTER TABLE users ADD CONSTRAINT unique_user UNIQUE (first_name, last_name);
+-- ALTER TABLE users ADD CONSTRAINT unique_user UNIQUE (first_name, last_name);
 `;
 
 async function main() {
