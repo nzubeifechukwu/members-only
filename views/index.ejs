@@ -9,18 +9,23 @@
   <body>
     <% if (user) { %> <% if (user.is_member) { %>
     <header>
-      <nav><a href="/member/<%= user.user_id %>/create">Create Post</a></nav>
-      <h1>Members Only</h1>
+      <h1 class="member">Members Only</h1>
     </header>
-    <main>
-      <h2>You're in, <%= user.first_name %></h2>
-      <section>
+    <main class="member-confirmed">
+      <div>
+        <h2>You're in, <%= user.first_name %></h2>
+        <div class="create-post">
+          <a href="/member/<%= user.user_id %>/create">Create Post</a>
+        </div>
+      </div>
+      <section class="messages">
         <% if (messages.length) {%> <% messages.forEach((message) => { %>
         <article>
-          <h4><%= message.title %></h4>
+          <h3><%= message.title %></h3>
           <p>
-            At <%= message.timestamp %>, <%= message.first_name %> <%=
-            message.last_name %> wrote:
+            At <%= message.timestamp %>,
+            <strong><%= message.first_name %> <%= message.last_name %></strong>
+            wrote:
           </p>
           <p><%= message.body %></p>
           <% if (user.is_admin) { %>
@@ -38,19 +43,21 @@
       </section>
       <% if (user.is_admin && messages.length) { %>
       <form action="/delete" method="post">
-        <button
-          type="submit"
-          onclick="return confirm('Are you sure you want to clear all messages?')"
-        >
-          Delete All
-        </button>
+        <div class="delete-all">
+          <button
+            type="submit"
+            onclick="return confirm('Are you sure you want to clear all messages?')"
+          >
+            Delete All
+          </button>
+        </div>
       </form>
       <% } %>
-      <a href="/log-out">LOG OUT</a>
+      <div class="logout"><a href="/log-out">LOG OUT</a></div>
     </main>
     <% } else { %>
     <header><h1>Members Only</h1></header>
-    <main>
+    <main class="member-unconfirmed">
       <h2>WELCOME, <%= user.first_name %></h2>
       <form action="/member/<%= user.user_id %>" method="post" class="member">
         <h3>Enter the secret passcode to see message author details</h3>
@@ -58,15 +65,15 @@
         ><input type="password" id="passcode" name="passcode" />
         <button type="submit">Submit</button>
       </form>
-      <section>
+      <section class="messages">
         <% if (messages.length) {%> <% messages.forEach((message) => { %>
         <article>
-          <h4><%= message.title %></h4>
+          <h3><%= message.title %></h3>
           <p><%= message.body %></p>
         </article>
         <%}); %> <% } %>
       </section>
-      <a href="/log-out">LOG OUT</a>
+      <div class="logout"><a href="/log-out">LOG OUT</a></div>
     </main>
     <% } %> <% } else { %>
     <main class="login">

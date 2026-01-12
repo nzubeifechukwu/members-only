@@ -31,9 +31,48 @@ main.login h1 {
   margin-bottom: 20px;
 }
 
+h1.member {
+  text-align: center;
+  margin: 30px;
+}
+
 main.login h2,
 .sign-up h2 {
   margin-bottom: 15px;
+}
+
+.member-confirmed,
+.member-unconfirmed {
+  margin: 30px;
+}
+
+.member-confirmed h2,
+.member-unconfirmed h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.create-post,
+.logout {
+  text-align: center;
+}
+
+section.messages {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin: 30px;
+}
+
+section.messages article {
+  padding: 20px;
+  border: 1px solid #13315c;
+  border-radius: 5px;
+}
+
+section.messages article p,
+section.messages article button {
+  margin-top: 10px;
 }
 
 main.login div,
@@ -41,12 +80,12 @@ main.login div,
   margin-bottom: 10px;
 }
 
-main.login input, .sign-up input {
+main.login input,
+.sign-up input {
   padding: 1.5px;
 }
 
-main.login button,
-.sign-up button {
+button {
   font-weight: 600;
   padding: 5px;
   cursor: pointer;
@@ -54,6 +93,11 @@ main.login button,
 
 .sign-up button {
   margin-bottom: 10px;
+}
+
+div.delete-all {
+  text-align: center;
+  margin: 20px;
 }
 
 fieldset {
@@ -67,8 +111,5 @@ fieldset label {
 
 footer {
   text-align: center;
-}
-
-.sign-up footer {
-  margin-top: 20px;
+  margin: 30px;
 }
