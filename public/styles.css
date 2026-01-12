@@ -17,28 +17,58 @@ main.login {
   margin: 30px;
 }
 
+.sign-up {
+  text-align: center;
+  margin: 30px;
+}
+
 main.login h1 {
   margin-bottom: 20px;
 }
 
-main.login h2 {
+.sign-up h1 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+main.login h2,
+.sign-up h2 {
   margin-bottom: 15px;
 }
 
-main.login div {
+main.login div,
+.sign-up div.not-radio {
   margin-bottom: 10px;
 }
 
-main.login input {
+main.login input, .sign-up input {
   padding: 1.5px;
 }
 
-main.login button {
+main.login button,
+.sign-up button {
   font-weight: 600;
   padding: 5px;
   cursor: pointer;
 }
 
+.sign-up button {
+  margin-bottom: 10px;
+}
+
+fieldset {
+  border: none;
+  margin-bottom: 10px;
+}
+
+fieldset label {
+  margin-left: 5px;
+}
+
 footer {
   text-align: center;
+}
+
+.sign-up footer {
+  margin-top: 20px;
 }

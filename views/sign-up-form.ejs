@@ -3,59 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up</title>
+    <title>Sign Up | Members Only</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body class="sign-up">
     <header>
-      <nav></nav>
-      <h1>Sign Up</h1>
+      <h1>Members Only</h1>
+      <h2>Sign Up</h2>
     </header>
     <main>
       <%- include('partials/inputValidationErrors') %>
       <form action="/sign-up" method="post">
-        <label for="firstName">First Name</label>
-        <input
-          type="text"
-          name="firstName"
-          id="firstName"
-          value="<%= locals.formData ? formData.firstName : '' %>"
-        />
-        <label for="lastName">Last Name</label>
-        <input
-          type="text"
-          name="lastName"
-          id="lastName"
-          value="<%= locals.formData ? formData.lastName : '' %>"
-        />
-        <label for="username">Email</label>
-        <input
-          type="email"
-          name="username"
-          id="username"
-          value="<%= locals.formData ? formData.username : '' %>"
-        />
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" />
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" name="confirmPassword" id="confirmPassword" />
+        <div class="not-radio">
+          <label for="firstName">First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            id="firstName"
+            value="<%= locals.formData ? formData.firstName : '' %>"
+          />
+        </div>
+        <div class="not-radio">
+          <label for="lastName">Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            id="lastName"
+            value="<%= locals.formData ? formData.lastName : '' %>"
+          />
+        </div>
+        <div class="not-radio">
+          <label for="username">Email</label>
+          <input
+            type="email"
+            name="username"
+            id="username"
+            value="<%= locals.formData ? formData.username : '' %>"
+          />
+        </div>
+        <div class="not-radio">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" />
+        </div>
+        <div class="not-radio">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" name="confirmPassword" id="confirmPassword" />
+        </div>
         <fieldset>
           <legend>Are you an admin?</legend>
           <div>
             <input type="radio" value="yes" name="isAdmin" id="yes"
-            <%= locals.formData && formData.isAdmin === 'yes' ? 'checked' : '' %>
+              <%= locals.formData && formData.isAdmin === 'yes' ? 'checked' : '' %>
             /><label for="yes">Yes</label>
           </div>
           <div>
-            <input
-              type="radio" name="isAdmin" id="no" value="no"
+            <input type="radio" name="isAdmin" id="no" value="no"
               <%= (locals.formData && formData.isAdmin === 'no') || !locals.formData ? 'checked' : '' %>
             /><label for="no">No</label>
           </div>
         </fieldset>
-        <button type="submit">Sign Up</button>
+        <div><button type="submit">Sign Up</button></div>
       </form>
       <small>Have an account? <a href="/">Log in</a></small>
     </main>
-    <footer></footer>
+    <footer>
+      <a href="" target="_blank"><small>&copy; Nzube Ifechukwu</small></a>
+    </footer>
   </body>
 </html>
