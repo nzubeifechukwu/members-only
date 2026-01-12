@@ -57,6 +57,27 @@ main.login h2,
   text-align: center;
 }
 
+.create-post {
+  margin: 30px;
+}
+
+.create-post nav,
+.create-post h1 {
+  margin: 30px;
+}
+
+.create-post h2 {
+  margin: 20px;
+}
+
+.create-post form div {
+  margin-bottom: 15px;
+}
+
+.create-post form label {
+  margin-right: 5px;
+}
+
 section.messages {
   display: grid;
   gap: 20px;
@@ -80,9 +101,9 @@ main.login div,
   margin-bottom: 10px;
 }
 
-main.login input,
-.sign-up input {
-  padding: 1.5px;
+input,
+textarea {
+  padding: 2px;
 }
 
 button {
