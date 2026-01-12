@@ -22,7 +22,13 @@ CREATE TABLE IF NOT EXISTS messages (
   user_id INTEGER REFERENCES users(user_id)
 );
 
--- ALTER TABLE users ADD CONSTRAINT unique_user UNIQUE (first_name, last_name);
+DO $$
+  BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'unique_user') THEN
+      ALTER TABLE users ADD CONSTRAINT unique_user UNIQUE (first_name, last_name);
+    END IF;
+  END;
+  $$;
 `;
 
 async function main() {
