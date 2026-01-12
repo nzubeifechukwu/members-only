@@ -31,6 +31,7 @@ main.login h1 {
   margin-bottom: 20px;
 }
 
+h1,
 h1.member {
   text-align: center;
   margin: 30px;
@@ -47,8 +48,13 @@ main.login h2,
 }
 
 .member-confirmed h2,
-.member-unconfirmed h2 {
+.member-unconfirmed h2,
+h3 {
   margin-bottom: 20px;
+  text-align: center;
+}
+
+.member-unconfirmed form {
   text-align: center;
 }
 
