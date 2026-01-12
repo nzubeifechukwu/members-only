@@ -19,8 +19,8 @@ const assetsPath = path.join(__dirname, "public");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.set(express.static(assetsPath));
 
+app.use(express.static(assetsPath));
 app.use(
   session({
     secret: process.env.secret,
@@ -32,6 +32,7 @@ app.use(flash());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
+  // error message on failure to authenticate user on log in attempt
   res.locals.errorMessage = req.flash("error");
   next();
 });

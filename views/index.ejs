@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Members Only</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <% if (user) { %> <% if (user.is_member) { %>
@@ -68,21 +69,28 @@
       <a href="/log-out">LOG OUT</a>
     </main>
     <% } %> <% } else { %>
-    <h1>please log in</h1>
-    <form action="/log-in" method="POST">
-      <%- include('partials/userAuthenticationError') %>
-      <label for="username">Email</label>
-      <input
-        id="username"
-        name="username"
-        placeholder="username"
-        type="email"
-      />
-      <label for="password">Password</label>
-      <input id="password" name="password" type="password" />
-      <button type="submit">Log In</button>
-    </form>
-    <small>Don't have an account? <a href="/sign-up">Sign up</a></small>
+    <main class="login">
+      <h1>Members Only</h1>
+      <h2>Log in</h2>
+      <form action="/log-in" method="POST">
+        <%- include('partials/userAuthenticationError') %>
+        <div>
+          <label for="username">Email</label>
+          <input
+            id="username"
+            name="username"
+            placeholder="username"
+            type="email"
+          />
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" />
+        </div>
+        <div><button type="submit">Log In</button></div>
+      </form>
+      <small>Don't have an account? <a href="/sign-up">Sign up</a></small>
+    </main>
     <%}%>
     <footer>
       <a href="" target="_blank"><small>&copy; Nzube Ifechukwu</small></a>
