@@ -61,7 +61,8 @@
       <h2>WELCOME, <%= user.first_name %></h2>
       <form action="/member/<%= user.user_id %>" method="post" class="member">
         <h3>Enter the secret passcode to see message author details</h3>
-        <label for="passcode">Passcode</label
+        <label for="passcode"
+          >Passcode (hint: a pretty popular, six-letter female name)</label
         ><input type="password" id="passcode" name="passcode" />
         <button type="submit">Submit</button>
       </form>
